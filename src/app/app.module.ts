@@ -8,6 +8,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
 import { NgxModelModule } from 'ngx-model';
+import { ConferencesProvider } from '../providers/conferences/conferences';
+import { SpeakersProvider } from '../providers/speakers/speakers';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { NgxModelModule } from 'ngx-model';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ConferencesProvider,
+    SpeakersProvider
   ]
 })
 export class AppModule {}
