@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 
-/**
- * Generated class for the ConferenceListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ConferencesProvider } from './../../providers/conferences/conferences';
+import { Conference } from '../../interfaces/conference.interface';
 
 @IonicPage()
 @Component({
@@ -15,11 +12,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ConferenceListPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  conferences$: Observable<Conference[]>
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private conferencesProv: ConferencesProvider
+  ) { }
+
+  ionViewWillLoad() {
+    
+    this.conferences$ = this.conferencesProv.conferences$;
+
+    // Start data flow
+    this.conferencesProv.getConferences().subscribe();
+    
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ConferenceListPage');
+  goToDetail(conference: Conference) {
+    this.navCtrl.push('ConferenceDetailPage', {conference: conference});
   }
 
 }
