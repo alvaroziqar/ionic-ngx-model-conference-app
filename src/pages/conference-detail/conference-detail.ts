@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
@@ -20,7 +20,9 @@ export class ConferenceDetailPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private speakersProv: SpeakersProvider
+    private speakersProv: SpeakersProvider,
+    private modalCtrl: ModalController,
+    private alertCtrl: AlertController
   ) { }
 
   ionViewWillLoad() {
@@ -36,6 +38,52 @@ export class ConferenceDetailPage {
 
     // Start speakers data flow
     this.speakersProv.getSpeakers().subscribe();
+  }
+
+  removeSpeaker(speaker: Speaker) {
+    let alert = this.alertCtrl.create({
+      title: 'Information',
+      subTitle: 'Are you sure?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            this.speakersProv.removeSpeaker(speaker).subscribe();
+          }
+        }
+      ]
+    });
+
+    alert.present();
+  }
+
+  updateSpeaker(speaker: Speaker) {
+    let modal = this.modalCtrl.create('SpeakerFormPage', { speaker: speaker });
+    
+    modal.onWillDismiss((data) => {
+      if (data && data.speaker) {
+        this.speakersProv.updateSpeaker(data.speaker).subscribe();
+      }
+    });
+
+    modal.present();
+  }
+  
+  createSpeaker() { 
+    let modal = this.modalCtrl.create('SpeakerFormPage', { speaker: null });
+    
+    modal.onWillDismiss((data) => {
+      if (data && data.speaker) {
+        data.speaker.conferenceId = parseInt(this.conference.id);
+        this.speakersProv.createSpeaker(data.speaker).subscribe();
+      }
+    });
+
+    modal.present();
   }
 
 }

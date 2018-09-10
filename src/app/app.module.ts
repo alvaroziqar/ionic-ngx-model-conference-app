@@ -7,7 +7,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 
 import { NgxModelModule } from 'ngx-model';
 import { ConferencesProvider } from '../providers/conferences/conferences';
@@ -16,7 +15,6 @@ import { SpeakersProvider } from '../providers/speakers/speakers';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
   ],
   imports: [
     BrowserModule,
@@ -27,7 +25,6 @@ import { SpeakersProvider } from '../providers/speakers/speakers';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
   ],
   providers: [
     StatusBar,

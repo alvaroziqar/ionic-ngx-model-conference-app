@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { tap } from 'rxjs/operators';
+import { tap, switchMap } from 'rxjs/operators';
 
 import { ModelFactory, Model } from 'ngx-model';
 
@@ -30,6 +30,39 @@ export class SpeakersProvider {
       .pipe(
         tap((speakers: Speaker[]) => {
           this.model.set(speakers);
+        })
+      );
+  }
+
+
+  removeSpeaker(speaker: Speaker) {
+    const url = `${this.endpoint}/${speaker.id}`;
+
+    return this.http.delete(url)
+      .pipe(
+        switchMap(() => {
+          return this.getSpeakers();
+        })
+      );
+  }
+
+  updateSpeaker(speaker: Speaker) {
+    const url = `${this.endpoint}/${speaker.id}`; 
+    
+    return this.http.put(url, speaker)
+      .pipe(
+        switchMap(() => {
+          return this.getSpeakers();
+        })
+      );
+  }
+
+  createSpeaker(speaker: any) {
+     
+    return this.http.post(this.endpoint, speaker)
+      .pipe(
+        switchMap(() => {
+          return this.getSpeakers();
         })
       );
   }

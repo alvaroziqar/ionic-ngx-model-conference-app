@@ -19,10 +19,10 @@
       </ion-avatar>
       <h2>{{ speaker.name }}</h2>
       <p>
-        <button ion-button small color="primary">
+        <button ion-button small color="primary" (tap)="updateSpeaker(speaker)">
           <ion-icon name="create"></ion-icon>
         </button>
-        <button ion-button small color="danger">
+        <button ion-button small color="danger" (tap)="removeSpeaker(speaker)">
           <ion-icon name="trash"></ion-icon>
         </button>
       </p>
@@ -30,6 +30,6 @@
   </ion-list>
 
   <ion-fab bottom right>
-    <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini (tap)="createSpeaker()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>
