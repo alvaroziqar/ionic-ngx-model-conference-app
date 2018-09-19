@@ -36,7 +36,7 @@ This project was generated with [Ionic CLI](https://github.com/ionic-team/ionic-
 
 ## Documentation
 
-- Link to article ng-classroom 
+[Gestionando el estado de tu aplicación ionic con ngx-model](https://blog.ng-classroom.com/blog/ionic2/ngx-model/)
 
 ## NgxModel Documentation
 
